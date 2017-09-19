@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
-
+@interface FirstViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, retain) NSArray *dataList;
+@property (nonatomic, retain) UITableView *myTableView;
+@property (nonatomic, retain) UILabel *statusLabel;
 
 @end
 

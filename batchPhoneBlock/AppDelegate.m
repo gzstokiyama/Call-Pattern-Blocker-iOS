@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "FirstViewController.h"
+#import "APP_CONSTANTS.h"
+#import "SharedFileOperator.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,42 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    FirstViewController *fvc = [[FirstViewController alloc]init];
+    
+    
+    self.navController = [[UINavigationController alloc] init];
+    [[UINavigationBar appearance]setBarTintColor:RGBCOLOR(40, 140, 210)];
+    [[UINavigationBar appearance]setTintColor:RGBCOLOR(255, 255, 255)];
+    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:18.0f]}];
+    application.statusBarStyle = UIStatusBarStyleLightContent;
+    
+    [self.navController pushViewController:fvc animated:YES];
+    [self.window setRootViewController:self.navController];
+    
+    //初始化默认数据
+    //    NSUserDefaults *shared = [[NSUserDefaults alloc]initWithSuiteName:@"group.batchblocker"];
+    SharedFileOperator *shared = [[SharedFileOperator alloc]initWithSuiteName:@"group.batchblocker" fileName:@"last.plist"];
+    NSDate *lastEdit = [shared valueForKey:@"last_edit"];
+    NSDate *lastSync = [shared valueForKey:@"last_sync"];
+    
+    NSLog(@"app delegate : edit: %@ ,sync:%@",lastEdit,lastSync);
+    
+    NSDate *now = [NSDate date];
+    if ([lastSync timeIntervalSince1970] ==0){
+            [shared setValue:now forKey:@"last_edit"];
+    }
+    if ([lastSync timeIntervalSince1970] ==0){
+            [shared setValue:now forKey:@"last_sync"];
+    }
+    [shared synchronize];
+    
+
+
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -47,5 +86,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+//禁用第三方输入键盘
+- (BOOL)application:(UIApplication *)application shouldAllowExtensionPointIdentifier:(NSString *)extensionPointIdentifier
+{
+    return NO;
+}
+
++ (AppDelegate *)sharedAppDelegate
+{
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 @end

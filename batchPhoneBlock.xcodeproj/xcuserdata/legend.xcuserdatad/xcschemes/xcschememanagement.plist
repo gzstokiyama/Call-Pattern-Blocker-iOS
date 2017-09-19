@@ -4,14 +4,24 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>batchPhoneBlock.xcscheme</key>
+		<key>batchPhoneBlock.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>batcher.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>47A0A2731F61433D0063F30C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>47C1596B1F6141DB00E11E02</key>
 		<dict>
 			<key>primary</key>
